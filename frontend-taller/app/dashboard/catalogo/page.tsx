@@ -59,7 +59,6 @@ export default function CatalogoPage() {
               <p className="text-gray-600 mb-4 line-clamp-2">{servicio.descripcion}</p>
               <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
                 <Clock size={16} />
-                {/* ✅ tiempoEstimadoMinutos no tiempoEstimado */}
                 <span>{servicio.tiempoEstimadoMinutos} minutos</span>
               </div>
               <button onClick={() => setSelected(servicio)}

@@ -21,7 +21,6 @@ export default function OrdenCard({
   const totalOrden = orden.presupuestoTotal ?? (totalServicios + totalRepuestos);
 
   const getEstadoInfo = () => {
-    // ✅ Incluye PENDIENTE_APROBACION del backend
     const estados: Record<string, { color: string; text: string; icon: any }> = {
       PENDIENTE:            { color: 'bg-gray-100 text-gray-800',    text: 'Pendiente',           icon: Clock },
       PENDIENTE_APROBACION: { color: 'bg-yellow-100 text-yellow-800',text: 'Esperando aprobación', icon: AlertCircle },
@@ -52,7 +51,6 @@ export default function OrdenCard({
         </span>
       </div>
 
-      {/* Presupuesto enviado por el mecánico */}
       {orden.presupuestoTotal && (
         <div className="mb-3 bg-yellow-50 border border-yellow-200 rounded p-2 flex items-center gap-2 text-sm">
           <DollarSign size={14} className="text-yellow-600" />
@@ -74,7 +72,6 @@ export default function OrdenCard({
 
       {showActions && (
         <div className="flex gap-2 pt-4 border-t">
-          {/* ✅ Cliente aprueba/rechaza presupuesto */}
           {rol === 'CLIENTE' && orden.estado === 'PENDIENTE_APROBACION' && onAprobarPresupuesto && (
             <>
               <button onClick={() => onAprobarPresupuesto(orden.id)}

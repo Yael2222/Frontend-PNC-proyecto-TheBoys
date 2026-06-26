@@ -1,4 +1,3 @@
-// app/dashboard/perfil/page.tsx
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';

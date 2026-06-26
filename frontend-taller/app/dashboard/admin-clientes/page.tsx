@@ -31,7 +31,6 @@ export default function AdminClientesPage() {
 
   const fetchClientes = async () => {
     try {
-      // ✅ usa clienteApi en lugar de adminApi.getClientes (que no existe)
       const res = await clienteApi.getAll();
       setClientes(res.data);
       setFiltered(res.data);
@@ -42,7 +41,6 @@ export default function AdminClientesPage() {
   const verHistorial = async (cliente: ClienteInfo) => {
     setSelectedCliente(cliente);
     try {
-      // ✅ Filtra por clienteId correcto
       const res = await ordenApi.getByCliente(cliente.id);
       setOrdenesCliente(res.data);
     } catch (err) { console.error(err); }

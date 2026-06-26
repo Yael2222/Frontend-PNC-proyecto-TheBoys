@@ -59,7 +59,6 @@ export default function AdminReportesPage() {
     <div>
       <h1 className="text-2xl font-bold mb-6">Reporte Global</h1>
 
-      {/* Filtros */}
       <div className="bg-white rounded-lg shadow-md p-4 mb-6">
         <div className="grid md:grid-cols-4 gap-4 items-end">
           <div>
@@ -87,7 +86,6 @@ export default function AdminReportesPage() {
         </div>
       </div>
 
-      {/* Resumen */}
       {resumen && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-white rounded-lg shadow-md p-4">
@@ -110,7 +108,6 @@ export default function AdminReportesPage() {
       )}
 
       <div className="grid md:grid-cols-2 gap-6">
-        {/* Mecánicos por horas */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
             <Users size={20} className="text-blue-700" /> Mecánicos más eficientes
@@ -127,7 +124,6 @@ export default function AdminReportesPage() {
             ))}
         </div>
 
-        {/* Repuestos más usados */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
             <Package size={20} className="text-blue-700" /> Repuestos más usados
@@ -144,7 +140,6 @@ export default function AdminReportesPage() {
             ))}
         </div>
 
-        {/* Órdenes por sucursal */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
             <BarChart3 size={20} className="text-blue-700" /> Órdenes por sucursal
@@ -158,7 +153,6 @@ export default function AdminReportesPage() {
             ))}
         </div>
 
-        {/* Órdenes en rango */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
             <Calendar size={20} className="text-blue-700" /> Órdenes en el período

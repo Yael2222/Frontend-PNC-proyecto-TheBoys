@@ -1,4 +1,3 @@
-// components/layout/Header.tsx
 'use client';
 
 import { Menu, X, User, LogOut } from 'lucide-react';
@@ -18,7 +17,6 @@ export default function Header({ sidebarOpen, setSidebarOpen }: HeaderProps) {
   return (
     <header className="fixed top-0 left-0 right-0 bg-blue-900 text-white shadow-lg z-30">
       <div className="flex items-center justify-between px-4 py-3">
-        {/* Logo y nombre del taller */}
         <div className="flex items-center space-x-3">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -32,7 +30,6 @@ export default function Header({ sidebarOpen, setSidebarOpen }: HeaderProps) {
           </Link>
         </div>
 
-        {/* Avatar y menú de usuario */}
         <div className="relative">
           <button
             onClick={() => setShowUserMenu(!showUserMenu)}
@@ -44,7 +41,6 @@ export default function Header({ sidebarOpen, setSidebarOpen }: HeaderProps) {
             <span className="hidden md:inline">{user?.nombre?.split(' ')[0]}</span>
           </button>
 
-          {/* Dropdown del usuario */}
           {showUserMenu && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 z-40">
               <Link

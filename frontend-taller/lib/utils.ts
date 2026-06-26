@@ -1,8 +1,4 @@
-// lib/utils.ts
 
-/**
- * Formatea una fecha a string local (DD/MM/YYYY)
- */
 export const formatDate = (date: string | Date): string => {
   const d = new Date(date);
   return d.toLocaleDateString('es-ES', {
@@ -12,9 +8,7 @@ export const formatDate = (date: string | Date): string => {
   });
 };
 
-/**
- * Formatea una fecha con hora completa
- */
+
 export const formatDateTime = (date: string | Date): string => {
   const d = new Date(date);
   return d.toLocaleDateString('es-ES', {
@@ -26,9 +20,7 @@ export const formatDateTime = (date: string | Date): string => {
   });
 };
 
-/**
- * Formatea un número como moneda (USD)
- */
+
 export const formatCurrency = (amount: number): string => {
   return new Intl.NumberFormat('es-SV', {
     style: 'currency',
@@ -37,40 +29,29 @@ export const formatCurrency = (amount: number): string => {
   }).format(amount);
 };
 
-/**
- * Formatea un número con separadores de miles
- */
+
 export const formatNumber = (num: number): string => {
   return new Intl.NumberFormat('es-SV').format(num);
 };
 
-/**
- * Trunca un texto a una longitud máxima
- */
+
 export const truncateText = (text: string, maxLength: number = 100): string => {
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength) + '...';
 };
 
-/**
- * Valida un email
- */
+
 export const isValidEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
 
-/**
- * Valida una patente de El Salvador (formato: ABC-1234)
- */
 export const isValidPatente = (patente: string): boolean => {
   const patenteRegex = /^[A-Z]{3}-\d{3,4}$/;
   return patenteRegex.test(patente.toUpperCase());
 };
 
-/**
- * Obtiene el estado de una orden en español
- */
+
 export const getEstadoOrdenText = (estado: string): string => {
   const estados: Record<string, string> = {
     PENDIENTE_APROBACION: 'Pendiente de Aprobación',
@@ -82,9 +63,7 @@ export const getEstadoOrdenText = (estado: string): string => {
   return estados[estado] || estado;
 };
 
-/**
- * Obtiene el estado de una cita en español
- */
+
 export const getEstadoCitaText = (estado: string): string => {
   const estados: Record<string, string> = {
     PENDIENTE: 'Pendiente',
@@ -95,9 +74,7 @@ export const getEstadoCitaText = (estado: string): string => {
   return estados[estado] || estado;
 };
 
-/**
- * Obtiene el color del badge según el estado
- */
+
 export const getEstadoColor = (estado: string): string => {
   const colores: Record<string, string> = {
     PENDIENTE: 'bg-yellow-100 text-yellow-800',
@@ -112,9 +89,7 @@ export const getEstadoColor = (estado: string): string => {
   return colores[estado] || 'bg-gray-100 text-gray-800';
 };
 
-/**
- * Calcula el tiempo transcurrido desde una fecha
- */
+
 export const timeAgo = (date: string | Date): string => {
   const now = new Date();
   const past = new Date(date);
@@ -131,16 +106,12 @@ export const timeAgo = (date: string | Date): string => {
   return formatDate(date);
 };
 
-/**
- * Genera un ID único temporal
- */
+
 export const generateTempId = (): string => {
   return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 };
 
-/**
- * Debounce para funciones de búsqueda
- */
+
 export function debounce<T extends (...args: any[]) => any>(
   func: T,
   delay: number
@@ -152,9 +123,7 @@ export function debounce<T extends (...args: any[]) => any>(
   };
 }
 
-/**
- * Agrupa un array por una propiedad
- */
+
 export const groupBy = <T>(array: T[], key: keyof T): Record<string, T[]> => {
   return array.reduce((result, item) => {
     const groupKey = String(item[key]);

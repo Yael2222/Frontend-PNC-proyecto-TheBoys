@@ -86,7 +86,6 @@ const dispatchApiErrorEvent = (
   window.dispatchEvent(new CustomEvent(eventName, { detail }));
 };
 
-// Interceptor: agregar JWT
 api.interceptors.request.use(
   (config) => {
     const token = getStoredToken();
@@ -100,7 +99,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Interceptor: manejo global de errores
 api.interceptors.response.use(
   (response) => response,
   (error: ApiError) => {
@@ -198,13 +196,11 @@ export const resetApiState = () => {
   lastErrorEventTime = 0;
 };
 
-// ============ AUTH ============
 export const authApi = {
   login: (data: any) => api.post('/auth/login', data),
   register: (data: any) => api.post('/auth/register', data),
 };
 
-// ============ NOTIFICACIONES ============
 export const notificacionApi = {
   getByUsuario: (usuarioId: number) => api.get(`/notificaciones/usuario/${usuarioId}`),
   getNoLeidas: (usuarioId: number) => api.get(`/notificaciones/usuario/${usuarioId}/no-leidas`),
@@ -213,7 +209,6 @@ export const notificacionApi = {
   marcarTodasLeidas: (usuarioId: number) => api.patch(`/notificaciones/usuario/${usuarioId}/leer-todas`),
 };
 
-// ============ USUARIOS ============
 export const usuarioApi = {
   getAll: () => api.get('/usuarios'),
   getById: (id: number) => api.get(`/usuarios/${id}`),
@@ -226,7 +221,6 @@ export const usuarioApi = {
     api.patch(`/usuarios/${id}/cambiar-rol`, data),
 };
 
-// ============ SUCURSALES ============
 export const sucursalApi = {
   getAll: () => api.get('/sucursales'),
   getById: (id: number) => api.get(`/sucursales/${id}`),
@@ -235,7 +229,6 @@ export const sucursalApi = {
   delete: (id: number) => api.delete(`/sucursales/${id}`),
 };
 
-// ============ CLIENTES ============
 export const clienteApi = {
   getAll: () => api.get('/clientes'),
   getById: (id: number) => api.get(`/clientes/${id}`),
@@ -245,7 +238,6 @@ export const clienteApi = {
   delete: (id: number) => api.delete(`/clientes/${id}`),
 };
 
-// ============ MECÁNICOS ============
 export const mecanicoApi = {
   getAll: () => api.get('/mecanicos'),
   getById: (id: number) => api.get(`/mecanicos/${id}`),
@@ -255,7 +247,6 @@ export const mecanicoApi = {
   delete: (id: number) => api.delete(`/mecanicos/${id}`),
 };
 
-// ============ VEHÍCULOS ============
 export const vehiculoApi = {
   getByPatente: (patente: string) => api.get(`/vehiculos/${encodeURIComponent(patente)}`),
   getByCliente: (clienteId: number) => api.get(`/vehiculos/cliente/${clienteId}`),
@@ -264,7 +255,6 @@ export const vehiculoApi = {
   delete: (patente: string) => api.delete(`/vehiculos/${encodeURIComponent(patente)}`),
 };
 
-// ============ SERVICIOS ============
 export const servicioApi = {
   getAll: () => api.get('/servicios'),
   getActivos: () => api.get('/servicios'),
@@ -275,7 +265,6 @@ export const servicioApi = {
   delete: (id: number) => api.delete(`/servicios/${id}`),
 };
 
-// ============ PROVEEDORES ============
 export const proveedorApi = {
   getAll: () => api.get('/proveedores'),
   getById: (id: number) => api.get(`/proveedores/${id}`),
@@ -284,7 +273,6 @@ export const proveedorApi = {
   delete: (id: number) => api.delete(`/proveedores/${id}`),
 };
 
-// ============ REPUESTOS ============
 export const repuestoApi = {
   getAll: () => api.get('/repuestos'),
   getById: (id: number) => api.get(`/repuestos/${id}`),
@@ -295,7 +283,6 @@ export const repuestoApi = {
   delete: (id: number) => api.delete(`/repuestos/${id}`),
 };
 
-// ============ INVENTARIO ============
 export const inventarioApi = {
   getBySucursal: (sucursalId: number) => api.get(`/inventario/sucursal/${sucursalId}`),
   getById: (id: number) => api.get(`/inventario/${id}`),
@@ -311,14 +298,12 @@ export const inventarioApi = {
   delete: (id: number) => api.delete(`/inventario/${id}`),
 };
 
-// ============ REGISTRO DE HORAS ============
 export const horasApi = {
   getByMecanico: (mecanicoId: number) => api.get(`/horas/mecanico/${mecanicoId}`),
   create: (data: any) => api.post('/horas', data),
   delete: (id: number) => api.delete(`/horas/${id}`),
 };
 
-// ============ FACTURAS ============
 export const facturaApi = {
   getAll: () => api.get('/facturas'),
   getById: (id: number) => api.get(`/facturas/${id}`),
@@ -333,14 +318,14 @@ export const facturaApi = {
 
   confirmarPagoEfectivo: (facturaId: number) =>
     api.patch(`/facturas/${facturaId}/confirmar-pago-efectivo`),
+  confirmarPagoSeguro: (facturaId: number) =>
+  api.patch(`/facturas/${facturaId}/confirmar-pago-seguro`),
 };
-// ============ PAGOS STRIPE ============
 export const stripeApi = {
   getConfig: () => api.get('/pagos/stripe/config'),
   pagar: (data: { facturaId: number; token: string }) => api.post('/pagos/stripe', data),
 };
 
-// ============ CITAS ============
 export const citaApi = {
   getById: (id: number) => api.get(`/citas/${id}`),
   getByCliente: (clienteId: number) => api.get(`/citas/cliente/${clienteId}`),
@@ -363,7 +348,6 @@ export const citaApi = {
   cancelar: (id: number) => api.delete(`/citas/${id}`),
 };
 
-// ============ ÓRDENES DE TRABAJO ============
 export const ordenApi = {
   create: (data: any) => api.post('/ordenes', data),
   getAll: () => api.get('/ordenes'),
@@ -386,7 +370,6 @@ export const ordenApi = {
   cancelar: (id: number) => api.delete(`/ordenes/${id}`),
 };
 
-// ============ REPORTES ============
 export const reporteApi = {
   getOrdenes: (desde: string, hasta: string, sucursalId?: number) =>
     api.get('/reportes/ordenes', {

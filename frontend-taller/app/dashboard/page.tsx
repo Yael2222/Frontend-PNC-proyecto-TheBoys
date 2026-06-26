@@ -1,4 +1,3 @@
-// app/dashboard/page.tsx
 'use client';
 
 import { useAuthStore } from '@/store/authStore';
@@ -10,7 +9,6 @@ export default function DashboardPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirigir según el rol del usuario
     if (user) {
       switch (user.rol) {
         case 'ADMIN':

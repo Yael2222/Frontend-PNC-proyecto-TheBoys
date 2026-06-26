@@ -4,7 +4,6 @@
 import { useNotificaciones } from '@/hooks/useNotificaciones';
 import { Bell, Calendar, CheckCircle, Circle, DollarSign, Wrench } from 'lucide-react';
 
-// Íconos basados en el campo "tipo" que devuelve el backend
 const getIcono = (tipo: string) => {
   if (tipo?.includes('PRESUPUESTO')) {
     return <DollarSign className="text-yellow-600" size={20} />;
@@ -21,7 +20,6 @@ const getIcono = (tipo: string) => {
   return <Bell className="text-gray-600" size={20} />;
 };
 
-// Etiqueta legible del tipo
 const getTipoLabel = (tipo: string) => {
   const labels: Record<string, string> = {
     PRESUPUESTO: 'Nuevo presupuesto',

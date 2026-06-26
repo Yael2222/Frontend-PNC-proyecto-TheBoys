@@ -1,4 +1,3 @@
-// app/page.tsx
 'use client';
 
 import Link from 'next/link';
@@ -7,7 +6,6 @@ import { Wrench, Calendar, Clock, Shield, MapPin, Phone, Mail } from 'lucide-rea
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Header público */}
       <header className="bg-blue-900 text-white shadow-lg">
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
@@ -30,7 +28,6 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -48,7 +45,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Servicios */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <h3 className="text-3xl font-bold text-center mb-12">Nuestros Servicios</h3>
@@ -68,7 +64,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Contacto */}
       <section className="bg-gray-100 py-16">
         <div className="container mx-auto px-4">
           <h3 className="text-3xl font-bold text-center mb-12">Contáctanos</h3>

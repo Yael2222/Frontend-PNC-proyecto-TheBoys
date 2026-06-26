@@ -57,7 +57,6 @@ export default function AdminSucursalesPage() {
       await sucursalApi.delete(id);
       fetchData();
     } catch (err: any) {
-      // ✅ El backend ya valida que no haya mecánicos
       alert(err.response?.data?.message || 'Error al eliminar');
     }
   };

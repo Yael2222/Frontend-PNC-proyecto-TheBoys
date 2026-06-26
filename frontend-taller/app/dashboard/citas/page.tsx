@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { citaApi, sucursalApi, vehiculoApi, servicioApi, ordenApi } from '@/lib/api';
+import { citaApi, sucursalApi, vehiculoApi, servicioApi, ordenApi, facturaApi } from '@/lib/api';
 import { useClienteId } from '@/hooks/useClienteId';
-import { Cita, Sucursal, Vehiculo, Servicio } from '@/types';
+import { Cita, Sucursal, Vehiculo, Servicio, Factura } from '@/types';
 import {
   Calendar as CalendarIcon,
   Clock,
@@ -58,6 +58,7 @@ export default function CitasPage() {
   const [sucursales, setSucursales] = useState<Sucursal[]>([]);
   const [vehiculos, setVehiculos] = useState<Vehiculo[]>([]);
   const [servicios, setServicios] = useState<Servicio[]>([]);
+  const [facturas, setFacturas] = useState<Factura[]>([]);
 
   const [citaACancelar, setCitaACancelar] = useState<Cita | null>(null);
   const [cancelandoCita, setCancelandoCita] = useState(false);
@@ -99,11 +100,12 @@ export default function CitasPage() {
     setLoading(true);
     setError('');
 
-    const [sucRes, vehRes, servRes, citasRes] = await Promise.allSettled([
+    const [sucRes, vehRes, servRes, citasRes, facturasRes] = await Promise.allSettled([
       sucursalApi.getAll(),
       vehiculoApi.getByCliente(clienteId),
       servicioApi.getAll(),
       citaApi.getByCliente(clienteId),
+      facturaApi.getByCliente(clienteId), 
     ]);
 
     if (requestId !== requestIdRef.current) return;
@@ -124,6 +126,12 @@ export default function CitasPage() {
       setCitas(citasRes.value.data);
     } else {
       setCitas([]);
+    }
+
+    if (facturasRes.status === 'fulfilled') {
+      setFacturas(facturasRes.value.data);
+    } else {
+      setFacturas([]);
     }
 
     const falloDatosNecesarios =
@@ -197,6 +205,7 @@ export default function CitasPage() {
         fecha: data.fecha,
         hora,
         servicioIds: data.serviciosIds,
+        facturaGarantiaId: data.facturaGarantiaId, 
       });
 
       await ordenApi.create({
@@ -204,7 +213,7 @@ export default function CitasPage() {
         patente: data.patente,
         clienteId,
         sucursalId,
-        tipoOrden: 'ESTANDAR',
+        tipoOrden: data.tipoOrden || 'ESTANDAR',
         servicios: data.serviciosIds.map((servicioId) => ({
           servicioId,
           precioAplicado:
@@ -541,6 +550,7 @@ export default function CitasPage() {
           sucursales={sucursales}
           vehiculos={vehiculos}
           servicios={servicios}
+          facturas={facturas} 
           servicioPreseleccionado={servicioPreseleccionadoId}
           onSubmit={handleSubmitCita}
           onClose={closeCitaForm}

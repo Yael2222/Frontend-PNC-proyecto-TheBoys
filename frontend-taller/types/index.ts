@@ -75,7 +75,7 @@ export interface Sucursal {
 }
 
 export interface Vehiculo {
-  patente: string;  
+  patente: string;
   marca: string;
   modelo: string;
   clienteId?: number;
@@ -149,7 +149,7 @@ export interface Factura {
   impuestos: number;
   total: number;
   estadoPago: 'PENDIENTE' | 'PAGADO' | 'REEMBOLSADO';
-  metodoPago: 'EFECTIVO' | 'TARJETA' | 'STRIPE' | null;
+  metodoPago: 'EFECTIVO' | 'TARJETA' | 'STRIPE' | 'SEGURO' | null;
 }
 
 export interface Cita {
@@ -166,6 +166,8 @@ export interface Cita {
   servicios?: string[];
   nuevaFechaPropuesta?: string;
   nuevaHoraPropuesta?: string;
+  tipoOrden?: 'ESTANDAR' | 'EXPRESS' | 'GARANTIA' | 'SEGURO';
+  facturaGarantiaId?: number;
 }
 
 export interface OrdenServicioRequest {

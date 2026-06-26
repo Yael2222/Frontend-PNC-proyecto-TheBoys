@@ -1,4 +1,3 @@
-// components/cards/ServicioCard.tsx
 'use client';
 
 import { Servicio } from '@/types';
@@ -28,7 +27,6 @@ export default function ServicioCard({ servicio, onAgendar }: ServicioCardProps)
           <span>{servicio.tiempoEstimadoMinutos} minutos</span>
         </div>
 
-        {/* Badge de estado */}
         {servicio.estado === 'INACTIVO' && (
           <div className="mb-4">
             <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">

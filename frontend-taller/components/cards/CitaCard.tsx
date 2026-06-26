@@ -22,7 +22,6 @@ export default function CitaCard({
         return { icon: <CheckCircle className="text-green-600" size={18} />, text: 'Confirmada', color: 'bg-green-100 text-green-800' };
       case 'CANCELADA':
         return { icon: <XCircle className="text-red-600" size={18} />, text: 'Cancelada', color: 'bg-red-100 text-red-800' };
-      // ✅ NUEVO: estado REPROGRAMADA
       case 'REPROGRAMADA':
         return { icon: <RefreshCw className="text-orange-500" size={18} />, text: 'Reprogramada', color: 'bg-orange-100 text-orange-800' };
       case 'COMPLETADA':
@@ -69,7 +68,6 @@ export default function CitaCard({
         {cita.servicios && cita.servicios.length > 0 && (
           <p className="text-xs text-gray-500">Servicios: {cita.servicios.join(', ')}</p>
         )}
-        {/* ✅ Mostrar nueva fecha propuesta cuando está REPROGRAMADA */}
         {cita.estado === 'REPROGRAMADA' && cita.nuevaFechaPropuesta && (
           <div className="bg-orange-50 border border-orange-200 rounded p-2 text-xs text-orange-800">
             Nueva fecha propuesta: {cita.nuevaFechaPropuesta} a las {cita.nuevaHoraPropuesta}

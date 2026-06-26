@@ -38,16 +38,13 @@ export default function AdminEmpleadosPage() {
     finally { setLoading(false); }
   };
 
-  // ✅ Busca por email → cambia rol a MECANICO con sucursal
   const handleCambiarRol = async () => {
     if (!emailBusqueda) { alert('Ingresa el correo'); return; }
     if (!sucursalSeleccionada) { alert('Selecciona una sucursal'); return; }
     setBuscando(true);
     try {
-      // 1. Buscar usuario por email
       const busRes = await usuarioApi.buscarPorEmail(emailBusqueda);
       const usuarioId = busRes.data.id;
-      // 2. Cambiar rol a MECANICO con sucursalId
       await usuarioApi.cambiarRol(usuarioId, {
         nuevoRol: 'MECANICO',
         sucursalId: parseInt(sucursalSeleccionada),
@@ -62,10 +59,8 @@ export default function AdminEmpleadosPage() {
     } finally { setBuscando(false); }
   };
 
-  // ✅ Cambiar sucursal del mecánico
   const handleCambiarSucursal = async (mecanicoId: number, sucursalId: number) => {
     try {
-      // Obtener usuarioId del mecánico
       const mecRes = await mecanicoApi.getById(mecanicoId);
       const usuarioId = mecRes.data.usuarioId;
       await usuarioApi.cambiarRol(usuarioId, { nuevoRol: 'MECANICO', sucursalId });
@@ -73,7 +68,6 @@ export default function AdminEmpleadosPage() {
     } catch (err: any) { alert(err.response?.data?.message || 'Error'); }
   };
 
-  // ✅ Despedir = eliminar mecánico (baja de rol)
   const handleDespedir = async (mecanicoId: number) => {
     if (!confirm('¿Despedir a este mecánico? Volverá a ser cliente.')) return;
     try {

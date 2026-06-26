@@ -16,7 +16,6 @@ export function useNotificaciones() {
     if (!isAuthenticated || !user?.id) return;
     try {
       setLoading(true);
-      // ✅ El backend devuelve { mensaje, leida, fechaCreacion, tipo, referenciaId }
       const response = await notificacionApi.getByUsuario(user.id);
       setNotificaciones(response.data);
 

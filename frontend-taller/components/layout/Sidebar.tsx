@@ -1,4 +1,3 @@
-// components/layout/Sidebar.tsx
 'use client';
 
 import { useCallback, useEffect, useState, type ComponentType } from 'react';
@@ -51,7 +50,6 @@ const getStoredUserId = (): number | null => {
         return parsedId;
       }
     } catch {
-      // Ignorar localStorage corrupto.
     }
   }
 
@@ -66,7 +64,6 @@ const getStoredUserId = (): number | null => {
         return parsedId;
       }
     } catch {
-      // Ignorar auth-storage corrupto.
     }
   }
 

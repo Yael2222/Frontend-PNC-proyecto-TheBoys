@@ -1,4 +1,3 @@
-// components/ui/Badge.tsx
 interface BadgeProps {
   status: string;
 }

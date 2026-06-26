@@ -33,7 +33,6 @@ export default function AdminInventarioPage() {
     if (!sucursalId) return;
     try {
       setLoading(true);
-      // ✅ Usa el endpoint de filtrado real del backend
       const res = await inventarioApi.filtrar(parseInt(sucursalId), categoria || undefined, nombre || undefined);
       setInventario(res.data);
     } catch (err) { console.error(err); }
@@ -72,7 +71,6 @@ export default function AdminInventarioPage() {
         </button>
       </div>
 
-      {/* Filtros */}
       <div className="bg-white rounded-lg shadow-md p-4 mb-6">
         <div className="grid md:grid-cols-4 gap-4 items-end">
           <div>
@@ -103,7 +101,6 @@ export default function AdminInventarioPage() {
         </div>
       </div>
 
-      {/* Tabla */}
       {loading ? (
         <div className="flex justify-center h-32 items-center">
           <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-700"></div>
@@ -139,7 +136,6 @@ export default function AdminInventarioPage() {
         </div>
       )}
 
-      {/* Modal gestionar repuestos */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg max-w-lg w-full mx-4 p-6 max-h-[90vh] overflow-y-auto">

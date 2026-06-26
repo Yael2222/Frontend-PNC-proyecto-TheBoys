@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { Sucursal, Vehiculo, Servicio } from '@/types';
+import { Sucursal, Vehiculo, Servicio, Factura } from '@/types';
 import { Calendar, Clock, MapPin, Car, Wrench } from 'lucide-react';
 
 export interface CitaFormData {
@@ -10,12 +10,15 @@ export interface CitaFormData {
   fecha: string;
   hora: string;
   serviciosIds: number[];
+  tipoOrden: 'ESTANDAR' | 'EXPRESS' | 'GARANTIA' | 'SEGURO';
+  facturaGarantiaId?: number;
 }
 
 interface CitaFormProps {
   sucursales: Sucursal[];
   vehiculos: Vehiculo[];
   servicios: Servicio[];
+  facturas: Factura[];          
   onSubmit: (data: CitaFormData) => Promise<void>;
   onClose: () => void;
   onAddVehiculo?: () => void;
@@ -28,12 +31,15 @@ const buildInitialForm = (servicioPreseleccionado?: number): CitaFormData => ({
   fecha: '',
   hora: '',
   serviciosIds: servicioPreseleccionado ? [servicioPreseleccionado] : [],
+  tipoOrden: 'ESTANDAR',
+  facturaGarantiaId: undefined,
 });
 
 export default function CitaForm({
   sucursales,
   vehiculos,
   servicios,
+  facturas,
   onSubmit,
   onClose,
   onAddVehiculo,
@@ -77,6 +83,10 @@ export default function CitaForm({
     setFormError('Debes registrar un vehículo antes de crear una cita.');
     return;
   }
+  if (formData.tipoOrden === 'GARANTIA' && !formData.facturaGarantiaId) {
+  setFormError('Selecciona una factura para aplicar la garantía.');
+  return;
+}
 
   if (serviciosActivos.length === 0) {
     setFormError('No hay servicios activos para seleccionar.');
@@ -138,6 +148,64 @@ export default function CitaForm({
       {serviciosActivos.length === 0 && <p>No hay servicios activos para seleccionar.</p>}
     </div>
   )}
+
+<div>
+  <label className="mb-1 flex items-center gap-2 text-sm font-bold text-gray-700">
+    Tipo de orden
+  </label>
+  <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+    {(['ESTANDAR', 'EXPRESS', 'GARANTIA', 'SEGURO'] as const).map((tipo) => (
+      <button
+        key={tipo}
+        type="button"
+        onClick={() => setFormData({ ...formData, tipoOrden: tipo, facturaGarantiaId: undefined })}
+        className={`rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${
+          formData.tipoOrden === tipo
+            ? 'border-blue-700 bg-blue-700 text-white'
+            : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+        }`}
+      >
+        {tipo === 'EXPRESS' ? ' Express (+$10)' :
+         tipo === 'GARANTIA' ? ' Garantía' :
+         tipo === 'SEGURO' ? '🏦Seguro' : 'Estándar'}
+      </button>
+    ))}
+  </div>
+
+  {formData.tipoOrden === 'EXPRESS' && (
+    <p className="mt-1 text-xs text-amber-600">Se agregará un cargo de $10.00 por servicio express.</p>
+  )}
+
+  {formData.tipoOrden === 'SEGURO' && (
+    <p className="mt-1 text-xs text-blue-600">El seguro cubrirá el costo. El mecánico confirmará el pago.</p>
+  )}
+
+  {formData.tipoOrden === 'GARANTIA' && (
+    <div className="mt-2">
+      <label className="mb-1 block text-sm font-bold text-gray-700">Seleccionar factura (últimos 30 días) *</label>
+      <select
+        value={formData.facturaGarantiaId ?? ''}
+        onChange={(e) => setFormData({ ...formData, facturaGarantiaId: Number(e.target.value) || undefined })}
+        className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        required
+      >
+        <option value="">Seleccionar factura</option>
+        {facturas
+          .filter((f) => {
+            const fecha = new Date(f.fechaOrden);
+            const hace30 = new Date();
+            hace30.setDate(hace30.getDate() - 30);
+            return f.estadoPago === 'PAGADO' && fecha >= hace30;
+          })
+          .map((f) => (
+            <option key={f.id} value={f.id}>
+              Factura #{f.id} — {f.vehiculoPatente} — ${f.total.toFixed(2)}
+            </option>
+          ))}
+      </select>
+    </div>
+  )}
+</div>
 
   {formError && (
     <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
